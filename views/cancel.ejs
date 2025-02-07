@@ -1,0 +1,156 @@
+<%- include("./includes/head.ejs"); %>
+  
+  <style>
+    section {
+      height: 100vh;
+    }
+    .first_cont {
+      height: 100vh;
+    }
+    
+    /* Add this CSS for proper spacing and responsive behavior */
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+        margin-right: 2rem;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0 0.5rem;
+    }
+    
+    #offcanvasNavbar {
+      display: none;
+    }
+
+    /* Optional: Add hover effects */
+    .nav-link:hover {
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+    
+    .navbar .navbar-nav .nav-item .nav-link i,
+    .navbar .navbar-nav .nav-item .nav-link span {
+        color: #f9046b;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link span {
+        font-weight: 600;
+    }
+    
+    /* Base styles for nav items */
+    .navbar .navbar-nav .nav-item .nav-link {
+        transition: all 0.3s ease;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link i,
+    .navbar .navbar-nav .nav-item .nav-link span {
+        transition: color 0.3s ease;
+    }
+
+    /* Hover styles */
+    .navbar .navbar-nav .nav-item:hover {
+        transform: scale(1.02);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .navbar .navbar-nav .nav-item:hover .nav-link i,
+    .navbar .navbar-nav .nav-item:hover .nav-link span {
+        color: black !important;
+    }
+
+    /* Optional: Add active state styles */
+    .navbar .navbar-nav .nav-item .nav-link.active i,
+    .navbar .navbar-nav .nav-item .nav-link.active span {
+        color: black !important;
+    }
+
+    .g_footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .footer_a {
+      text-decoration: none;
+      color: grey;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: color 0.3s, transform 0.3s; /* Smooth transitions */
+    }
+
+    .footer_a:hover {
+      color: black !important; /* Hover color */
+      transform: translateY(-5px); /* Small hover animation */
+    }
+    
+    /* Ensure proper mobile behavior */
+    @media (max-width: 800px) {
+      .first_cont {
+        margin-bottom: 80px;
+      }
+      
+      .navbar-collapse {
+        display: none;
+      }
+
+      #offcanvasNavbar {
+        display: block;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .first_cont {
+        margin-bottom: 200px;
+      }
+      
+      .g_footer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      
+      .g_footer div {
+        margin-bottom: 10px;
+        margin-right: 30px;
+      }
+      
+      .footer_a {
+        font-size: 14px;
+      }
+    }
+  </style>
+  
+  <header>
+		<%- include("./includes/header1.ejs"); %>
+	</header>
+    
+  <section>
+    <div class="container p-5 mt-3">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-2"></div>
+
+        <div class="col-12 col-md-8 border-0 p-3">
+          <h3>
+            Sorry you are not subscribed... Try again...
+          </h3>
+          <a href="/plans" class="btn btn-success mt-3">Go Back</a>
+        </div>
+
+        <div class="col-12 col-md-2"></div>
+      </div>
+    </div>
+ </section>
+    
+  <section>
+    <div class="container" style="height: 100px;"></div>
+  </section>
+    
+  <footer>
+	</footer>
+
+<%- include("./includes/end.ejs"); %>

@@ -1,0 +1,156 @@
+<%- include("./includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/login.css">
+
+<body class="bg-light">
+  <header>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+      <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container border-0 p-0 loginDiv1">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-12 text-center">
+          <% if(errorMessage) { %>
+            <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+          <% } else if (error_msg.length > 0) { %>
+            <div class="alert alert-danger" role="alert"><%= error_msg %></div>
+          <% } %>
+        </div>
+
+        <div class="col-12 col-lg-3"></div>
+
+        <div class="col-12 col-lg-6 p-4 border-0">
+          <h1 class="text-center text-uppercase">Reset Password</h1>
+          
+          <div class="mt-2">
+              <h6 class="text-center">
+                To complete your password reset, please enter your new password below.
+              </h6>
+          </div>
+
+          <form action="/change_pass" method="POST" id="form" novalidate>
+                <div class="mt-2 mb-1">
+                    <label for="exampleInputPassword1" class="form-label"></label>
+                    <div class="input-group">
+                        <input type="password" name="password" class="form-control p-3" id="exampleInputPassword1" placeholder="Password">
+                        <button type="button" class="btn pBtn position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                            <i class="fa-regular fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="exampleInputPassword2" class="form-label"></label>
+                    <div class="input-group">
+                        <input type="password" name="cpassword" class="form-control p-3" id="exampleInputPassword2" placeholder="Password confirmation">
+                        <button type="button" class="btn cpBtn position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                            <i class="fa-regular fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            <div class="mt-5">
+              <input type="hidden" name="email" value="<%= email%>" />
+              <button type="submit" class="btn text-white w-100" id="subBtn" style="background: #f9046b; font-weight: bold;">
+                Reset Password
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-12 col-lg-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let msg = '<%= errorMessage %>';
+  </script>
+
+  <script>
+      window.addEventListener('load', function () {
+        // console.log("hii...");
+
+        const loadingSpinner = document.getElementById('loadingSpinner');
+          
+        loadingSpinner.style.display = 'none';
+      });
+
+      const submitButton = globalThis.document.getElementById('subBtn');
+
+      // console.log(msg);
+
+      // console.log(oldInput);
+
+      globalThis.document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('form');
+
+        document.querySelector('.pBtn').addEventListener('click', (e) => {
+          const inputGroup = e.target.closest('.input-group');
+          const input = inputGroup.querySelector('input');
+          const button = inputGroup.querySelector('button');
+
+          const type = input.type === 'password' ? 'text' : 'password';
+          input.type = type;
+
+          if (type === 'text') {
+              button.innerHTML = '<i class="fa-regular fa-eye"></i>'; // Eye icon
+          } else {
+              button.innerHTML = '<i class="fa-regular fa-eye-slash"></i>'; // Eye-slash icon
+          }
+        });
+
+        document.querySelector('.cpBtn').addEventListener('click', (e) => {
+            const inputGroup = e.target.closest('.input-group');
+            const input = inputGroup.querySelector('input');
+            const button = inputGroup.querySelector('button');
+
+            const type = input.type === 'password' ? 'text' : 'password';
+            input.type = type;
+
+            if (type === 'text') {
+                button.innerHTML = '<i class="fa-regular fa-eye"></i>'; // Eye icon
+            } else {
+                button.innerHTML = '<i class="fa-regular fa-eye-slash"></i>'; // Eye-slash icon
+            }
+        });
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          // console.log(form.password.value.trim());
+          // console.log(form.cpassword.value.trim());
+
+          if (form.password.value.trim() === '' || form.cpassword.value.trim() === '') {
+              alert("Both password fields are required.");
+              form.password.value = '';
+              form.cpassword.value = '';
+          }
+
+          else if (form.password.value.trim() !== form.cpassword.value.trim()) {
+            alert("Password and Confirm Password must match...");
+            form.password.value = '';
+            form.cpassword.value = '';
+          }
+
+          else {
+            form.submit();
+          }
+        })
+
+        const errorMessageElement = document.querySelector(".alert");
+
+        // If the alert exists, set a timeout to remove it
+        if (msg) {
+          setTimeout(() => {
+            errorMessageElement.style.display = "none"; // Hide the alert
+          }, 3000); // 5 seconds (5000 milliseconds)
+        }
+      })
+    </script>
+</body>
+
+<%- include("./includes/end.ejs"); %>

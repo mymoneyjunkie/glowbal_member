@@ -1,0 +1,599 @@
+<%- include("./includes/head.ejs"); %>
+  
+  <style>
+        .first_cont {
+      height: 100vh;
+    }
+    
+    /* Add this CSS for proper spacing and responsive behavior */
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+        margin-right: 2rem;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0 0.5rem;
+    }
+    
+    #offcanvasNavbar {
+      display: none;
+    }
+
+    /* Optional: Add hover effects */
+    .nav-link:hover {
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+    
+    .navbar .navbar-nav .nav-item .nav-link i,
+    .navbar .navbar-nav .nav-item .nav-link span {
+        color: #f9046b;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link span {
+        font-weight: 600;
+    }
+    
+    /* Base styles for nav items */
+    .navbar .navbar-nav .nav-item .nav-link {
+        transition: all 0.3s ease;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link i,
+    .navbar .navbar-nav .nav-item .nav-link span {
+        transition: color 0.3s ease;
+    }
+
+    /* Hover styles */
+    .navbar .navbar-nav .nav-item:hover {
+        transform: scale(1.02);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .navbar .navbar-nav .nav-item:hover .nav-link i,
+    .navbar .navbar-nav .nav-item:hover .nav-link span {
+        color: black !important;
+    }
+
+    /* Optional: Add active state styles */
+    .navbar .navbar-nav .nav-item .nav-link.active i,
+    .navbar .navbar-nav .nav-item .nav-link.active span {
+        color: black !important;
+    }
+
+    .mobileCol {
+      display: none;
+    }
+
+    .planCol {
+      position: relative;
+      // background: linear-gradient(to bottom, #ff99cc, #f9046b);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .freeDiv {
+      display: none;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .list-group {
+      border: 0px !important;
+    }
+
+    .g_footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .footer_a {
+      text-decoration: none;
+      color: grey;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: color 0.3s, transform 0.3s; /* Smooth transitions */
+    }
+
+    .footer_a:hover {
+      color: black !important; /* Hover color */
+      transform: translateY(-5px); /* Small hover animation */
+    }
+    
+    .first_cont {
+        margin-bottom: 30px;
+        padding: 50px;
+    }
+    
+    .card {
+      position: relative; /* Add this to position the badge */
+    }
+
+    .most-popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f9046b;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 1;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(249, 4, 107, 0.2);
+    }
+    
+    /* Ensure proper mobile behavior */
+    @media (max-width: 800px) {
+      .first_cont {
+        margin-bottom: 80px;
+      }
+      
+      .navbar-collapse {
+        display: none;
+      }
+
+      #offcanvasNavbar {
+        display: block;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .first_cont {
+        margin-bottom: 200px;
+        padding: 70px 10px 10px 10px;
+      }
+
+      .mobileCol {
+        display: block;
+      }
+
+      .planCol {
+        display: none;
+      }
+
+      .plan-card {
+        flex: 0 0 32%;  /* flex-grow: 0, flex-shrink: 0, flex-basis: 100% */
+      }
+
+      .plan-card .card {
+        cursor: pointer;
+      }
+
+      .plan-card .card:hover {
+        border-color: #f9046b;
+        box-shadow: 0 2px 8px rgba(249, 4, 107, 0.2);
+      }
+
+      .plan-card.selected .card {
+        border-color: #f9046b;
+        background-color: #fff1f6;
+      }
+
+      .plan-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1f2937;
+      }
+
+      .plan-duration {
+        font-size: 0.9rem;
+        color: white;
+      }
+
+      .plan-price {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+      }
+      
+/*       .plan-card.selected {
+        border: 2px solid #f9046b;
+        transform: scale(1.05);
+      } */
+
+      .checkmark {
+        color: white;
+        font-weight: bold;
+      }
+
+      .selected .checkmark {
+        display: block !important;
+      }
+
+      .continue-btn {
+        background: #f9046b;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+      }
+
+      .continue-btn:hover {
+        background: #d0035a;
+      }
+      
+      .most-popular-badge {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+        top: -10px;
+      }
+      
+      .g_footer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      
+      .g_footer div {
+        margin-bottom: 10px;
+        margin-right: 30px;
+      }
+      
+      .footer_a {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .plans-container {
+          display: flex;
+          flex-wrap: wrap; /* Allows items to wrap to the next line */
+          align-items: stretch; /* Ensure all items stretch to the same height */
+      }
+
+      .plan-card {
+        flex: 0 0 auto;  /* flex-grow: 0, flex-shrink: 0, flex-basis: 100% */
+        height: 150px;
+        display: flex; /* Ensure the card content stretches inside the container */
+        flex-direction: column;
+      }
+    }
+  </style>
+  
+  <header>
+		<%- include("./includes/header1.ejs"); %>
+	</header>
+    
+  <section>
+    <div class="container first_cont">
+      <div class="row justify-content-center">                
+        <div class="col-12 col-xl-1 col-lg-2"></div>
+
+        <div class="col-12 col-xl-10 col-lg-8 border-0 mt-4">
+          <h3 class="text-start text-uppercase">Choose the plan that's right for you</h3>
+
+          <div class="mt-5">
+            <div class="row row-cols-sm-3 row-cols-md-3 row-cols-xl-3 g-4">
+              <% plans.forEach(i => { %>
+                <div class="col planCol position-relative">
+                  <a href="/subscribe?plan=<%= i.name %>" style="text-decoration: none;">
+                    <div class="card h-100" style="border: 2px solid #f9046b; border-radius: 10px; box-shadow: 0px 4px 10px rgba(249, 4, 107, 0.3);">
+                      <div class="card-body" style="border-radius: 6px 6px 0 0; background: linear-gradient(-30deg, #f9046b, #ff80aa);">
+                        <h6 class="card-title text-white"><%= i.product_name %></h6>
+                        <div class="text-white" style="font-size: 12px;">Starts at</div>
+                        <p class="card-text text-white" style="font-weight: 600; font-size: 22px;">
+                          £<%= Number(i.amount) / 100 %>
+                          <span class="ms-2" style="font-weight: 500; font-size: 12px;">per <%= i.interval_count %> <%= i.interval %>/user</span>
+                        </p>
+                        <div>
+                          <% if (i.subscription_status == "past_due") { %>
+                            <small class="text-white">Your subscription is currently past due because we couldn’t process 
+                              your payment. No worries — you can try to retry the payment one more time, or if you'd prefer, 
+                              you can cancel your subscription. Just choose an option below and we’ll 
+                              take care of the rest!
+                            </small>
+                          <% } else if (i.subscription_status == "active") { %>
+                            <small class="text-white">Your subscription is Active.</small>
+                          <% } else { %>
+                            <small class="text-white">Your subscription is <%= i.subscription_status %>.</small>
+                          <% } %>
+                        </div>
+                      </div>
+                      <ul class="list-group list-group-flush mt-3 me-3 ms-3">
+                        <li class="list-group-item">
+                          <small class="text-body-secondary">Monthly Price (GBP)</small> <br />
+                          <b>
+                            <sup class="border-0 p-0" style="font-size: 10px;">£</sup>
+                            <span class="p-0"><%= Number(i.amount) / 100 %></span>
+                          </b>
+                        </li>
+                        <li class="list-group-item">
+                          <small class="text-body-secondary">Duration</small> <br />
+                          <b>
+                            <span class="p-0 text-capitalize"><%= i.interval_count %> <%= i.interval %></span>
+                          </b>
+                        </li>
+                        <li class="list-group-item">
+                          <small class="text-body-secondary">Resolution</small> <br />
+                          <b>Full HD</b>
+                        </li>
+                        <li class="list-group-item">
+                          <small class="text-body-secondary">Watch on Your Phone, Tablet</small> <br />
+                          ✔
+                        </li>
+                        <li class="list-group-item">
+                          <small class="text-body-secondary">Easy Change or Cancel</small> <br />
+                          ✔
+                        </li>
+                        <li class="list-group-item">
+                          <small class="text-body-secondary">ADS</small> <br />
+                          <span style="color: red; font-weight: bold;">X</span>
+                        </li>
+                      </ul>
+                      <div class="card-footer d-flex align-items-center justify-content-center">
+                        <form action="/cancel_subscription" method="POST">
+                          <input type="hidden" name="s_id" value="<%= i.subscription_id %>" />
+                          <button type="submit" class="btn btn-outline-danger text-uppercase" style="font-weight: 600;">
+                            cancel
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              <% }) %>
+
+              <div class="col mobileCol position-relative">
+                <div class="plans-container d-flex flex-nowrap flex-row align-items-center justify-content-between border-0">
+                  <% plans.forEach((plan, index) => { %>
+                    <div class="plan-card mb-4" data-plan="<%= plan.product_name.toLowerCase() %>">
+                      <div class="card" 
+                           style="border: 1px solid #e5e7eb; border-radius: 12px; transition: all 0.3s ease; 
+                                  background: linear-gradient(-30deg, #f9046b, #ff80aa);"
+                      >
+                        <% if (plan.product_name.toLowerCase() == 'pro') { %>
+                          <div class="most-popular-badge">Most Popular</div>
+                        <% } %>
+                        <div class="card-body pe-3 ps-3 pt-4 pb-4">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h3 class="plan-name mb-1"><%= plan.product_name %></h3>
+                              <p class="plan-duration mb-0">
+                                <%= plan.interval_count %> <%= plan.interval %>
+                              </p>
+                              
+                              <span class="plan-price">
+                                £<%= Number(plan.amount) / 100 %>
+                              </span>
+                              <span class="checkmark ms-3 d-none">✓</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% }) %>
+                </div>
+
+                <!-- Plan Details Section -->
+                <div id="planDetails" class="mt-4 p-4 d-none" style="border: 1px solid #e5e7eb; border-radius: 12px;">
+                    <h4 class="selected-plan-name mb-2"></h4>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <span>Total amount</span>
+                      <span class="selected-plan-price fw-bold"></span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <span>Video and sound quality</span>
+                      <span class="selected-plan-quality fw-bold">Good</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <span>Resolution</span>
+                      <span class="selected-plan-quality fw-bold">Full HD</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <span>ADS</span>
+                      <span class="selected-plan-quality fw-bold">No Ads</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <span>Supported Devices</span>
+                      <span class="selected-plan-quality fw-bold">Mobile, Tablet, Laptop, Desktop</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <span>Plan Status</span>
+                      <p class="selected-plan-description text-gray-600 mt-3" style="font-weight: 500;"></p>                 
+                    </div>
+                    <a href="#" type="button" class="continue-btn w-100 mt-4 text-center" style="text-decoration: none;">Continue</a>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-1 col-lg-2"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" style="height: 200px;"></div>
+  </section>
+
+  <script>
+    const plan = <%- JSON.stringify(plans) %>;
+  </script>
+
+  <script>
+      globalThis.document.addEventListener('DOMContentLoaded', () => {
+        
+        const planCards = document.querySelectorAll('.plan-card');
+        const planDetails = document.getElementById('planDetails');
+        const continueBtn = planDetails.querySelector('.continue-btn');
+
+        const plans = plan; // Assuming `plan` is your array of plans.
+
+        // console.log(planCards);
+
+        // Check if there's only one plan card
+        if (planCards.length === 1) {
+          const onlyCard = planCards[0];
+          const planName = onlyCard.dataset.plan;
+          const selectedPlan = plans.find(p => p.product_name.toLowerCase() === planName);
+
+          // Automatically mark the only plan card as selected
+          onlyCard.classList.add('selected');
+          onlyCard.querySelector('.checkmark').classList.remove('d-none');
+
+          // Update plan details
+          planDetails.querySelector('.selected-plan-name').textContent = selectedPlan.product_name;
+          if (selectedPlan.subscription_status == "past_due") {
+              planDetails.querySelector('.selected-plan-description').textContent = `Your subscription is currently past due because we couldn’t process 
+                              your payment. No worries — you can try to retry the payment one more time, or if you'd prefer, 
+                              you can cancel your subscription. Just choose an option below and we’ll 
+                              take care of the rest!`;
+            planDetails.querySelector('.selected-plan-description').style.fontSize = '14px';
+            planDetails.querySelector('.selected-plan-description').style.marginLeft = '25px';
+          } else if (selectedPlan.subscription_status == "active") {
+              planDetails.querySelector('.selected-plan-description').textContent = "Your subscription is Active.";
+              planDetails.querySelector('.selected-plan-description').style.marginLeft = '20px';
+          } else {
+              planDetails.querySelector('.selected-plan-description').textContent = "Your subscription is " + selectedPlan.subscription_status + ".";
+              planDetails.querySelector('.selected-plan-description').style.marginLeft = '20px';
+          }
+          // planDetails.querySelector('.selected-plan-description').textContent = selectedPlan.subscription_status;
+          planDetails.querySelector('.selected-plan-price').textContent = `£ ${Number(selectedPlan.amount) / 100}`;
+
+          const continueUrl = `/subscribe?plan=${selectedPlan.product_name.toLowerCase()}`; // Customize the URL as per your logic
+          continueBtn.setAttribute('href', continueUrl);
+
+          // Show the plan details section
+          planDetails.classList.remove('d-none');
+        } 
+
+        else {
+          // Automatically select the "Most Popular" plan (2nd plan if multiple plans exist)
+          const mostPopularCard = planCards[0]; // You can customize this if needed
+          const mostPopularPlanName = mostPopularCard.dataset.plan;
+          const mostPopularPlan = plans.find(p => p.product_name.toLowerCase() === mostPopularPlanName);
+
+          // Mark the most popular plan as selected
+          mostPopularCard.classList.add('selected');
+          mostPopularCard.querySelector('.checkmark').classList.remove('d-none');
+
+          // Update plan details
+          planDetails.querySelector('.selected-plan-name').textContent = mostPopularPlan.product_name;
+          planDetails.querySelector('.selected-plan-description').textContent = mostPopularPlan.subscription_status;
+          planDetails.querySelector('.selected-plan-price').textContent = `£ ${Number(mostPopularPlan.amount) / 100}`;
+
+          const continueUrl = `/subscribe?plan=${mostPopularPlan.product_name.toLowerCase()}`; // Customize the URL as per your logic
+          continueBtn.setAttribute('href', continueUrl);
+
+          // Show the plan details section
+          planDetails.classList.remove('d-none');
+        }
+
+        // Add event listeners for other plans when there are multiple cards
+        planCards.forEach(card => {
+          card.addEventListener('click', function (e) {
+            // Remove selection from other cards
+            planCards.forEach(c => {
+              c.classList.remove('selected');
+              c.querySelector('.checkmark').classList.add('d-none');
+            });
+
+            // Add selection to clicked card
+            this.classList.add('selected');
+            this.querySelector('.checkmark').classList.remove('d-none');
+
+            // Get plan data
+            const planName = this.dataset.plan;
+            const plan = plans.find(p => p.product_name.toLowerCase() === planName);
+            
+            // console.log(plan.subscription_status, plan.subscription_status == "active");
+
+            // Update plan details
+            planDetails.querySelector('.selected-plan-name').textContent = plan.product_name;
+            if (plan.subscription_status == "active") {
+              planDetails.querySelector('.selected-plan-description').textContent = `Your subscription is currently past due because we couldn’t process 
+                              your payment. No worries — you can try to retry the payment one more time, or if you'd prefer, 
+                              you can cancel your subscription. Just choose an option below and we’ll 
+                              take care of the rest!`;
+            } else if (plan.subscription_status != "active") {
+              planDetails.querySelector('.selected-plan-description').textContent = "Your subscription is Active.";
+            } else {
+              planDetails.querySelector('.selected-plan-description').textContent = "Your subscription is " + plan.subscription_status + ".";
+            }
+            planDetails.querySelector('.selected-plan-price').textContent = `£ ${Number(plan.amount) / 100}`;
+
+            const continueUrl = `/subscribe?plan=${plan.product_name.toLowerCase()}`; // Customize the URL as per your logic
+            continueBtn.setAttribute('href', continueUrl);
+
+            // Show plan details section
+            planDetails.classList.remove('d-none');
+          });
+        });
+
+//         const planCards = document.querySelectorAll('.plan-card');
+//         const planDetails = document.getElementById('planDetails');
+//         const continueBtn = planDetails.querySelector('.continue-btn');
+
+//         const plans = plan; // Assuming `plan` is your array of plans.
+        
+//         console.log(planCards);
+
+//         // Automatically select the "Most Popular" plan (2nd plan)
+//         const mostPopularCard = planCards[0]; // Index 1 is the 2nd plan
+//         const mostPopularPlanName = mostPopularCard.dataset.plan;
+//         const mostPopularPlan = plans.find(p => p.name.toLowerCase() === mostPopularPlanName);
+
+//         // Mark the most popular plan as selected
+//         mostPopularCard.classList.add('selected');
+//         mostPopularCard.querySelector('.checkmark').classList.remove('d-none');
+
+//         // Update plan details
+//         planDetails.querySelector('.selected-plan-name').textContent = mostPopularPlan.name;
+//         planDetails.querySelector('.selected-plan-description').textContent = mostPopularPlan.subscription_status;
+//         planDetails.querySelector('.selected-plan-price').textContent = `£ ${Number(mostPopularPlan.amount) / 100}`;
+
+//         const continueUrl = `/subscribe?plan=${mostPopularPlan.name.toLowerCase()}`; // Customize the URL as per your logic
+//         continueBtn.setAttribute('href', continueUrl);
+
+//         // Show plan details section
+//         planDetails.classList.remove('d-none');
+
+//         // Add event listeners for other plans
+//         planCards.forEach(card => {
+//           card.addEventListener('click', function (e) {
+//             // Remove selection from other cards
+//             planCards.forEach(c => {
+//               c.classList.remove('selected');
+//               c.querySelector('.checkmark').classList.add('d-none');
+//             });
+
+//             // Add selection to clicked card
+//             this.classList.add('selected');
+//             this.querySelector('.checkmark').classList.remove('d-none');
+
+//             // Get plan data
+//             const planName = this.dataset.plan;
+//             const plan = plans.find(p => p.name.toLowerCase() === planName);
+
+//             // Update plan details
+//             planDetails.querySelector('.selected-plan-name').textContent = plan.name;
+//             planDetails.querySelector('.selected-plan-description').textContent = plan.subscription_status;
+//             planDetails.querySelector('.selected-plan-price').textContent = `£ ${Number(plan.amount) / 100}`;
+
+//             const continueUrl = `/subscribe?plan=${plan.name.toLowerCase()}`; // Customize the URL as per your logic
+//             continueBtn.setAttribute('href', continueUrl);
+
+//             // Show plan details section
+//             planDetails.classList.remove('d-none');
+//           });
+//         });
+      });
+
+  </script>
+
+<%- include("./includes/end.ejs"); %>

@@ -1,0 +1,139 @@
+<%- include("./includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/login.css">
+
+<body class="bg-light">
+  <header>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+      <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container border-0 p-0 loginDiv1">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-12 text-center">
+          <% if(errorMessage) { %>
+            <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+          <% } else if (error_msg.length > 0) { %>
+            <div class="alert alert-danger" role="alert"><%= error_msg %></div>
+          <% } %>
+        </div>
+
+        <div class="col-12 col-lg-3"></div>
+
+        <div class="col-12 col-lg-6 p-4 border-0">
+          <h1 class="text-center text-uppercase">
+            <% if (link == "/verify") { %>Verify Your Account<% } else { %>Reset Password<% } %>
+          </h1>
+          
+          <div class="mt-2">
+              <% if (link == "/verify" && oldInput.email !== '') { %>
+                <h6 class="text-center">
+                  We sent a verification code to 
+                  <%= oldInput.email.split('@')[0].slice(0,3)+'...' + oldInput.email.substring(oldInput.email.indexOf('@')) %>
+                  Please check your email and paste the code below.
+                </h6>
+              <% } else { %>
+                <h6 class="text-center">
+                  Remember your password?
+                  <a href="/login" style="text-decoration: none; color: #f9046b;">Login here</a>
+                </h6>
+              <% } %>
+            </div>
+
+          <form action="<%= link %>" method="POST" id="form" novalidate>
+            <% if (link != '/verify') { %>
+              <div class="mt-2 mb-1">
+                <label for="exampleInputEmail1" class="form-label"></label>
+                <input type="email" name="email" class="form-control p-3" id="exampleInputEmail1" 
+                       aria-describedby="emailHelp" placeholder="Email Address" value="<%= oldInput.email %>">
+              </div>
+            <% } %>
+            
+            <% if (link == '/verify') { %>
+              <div class="mt-2 mb-1">
+                <label for="exampleInputNumber" class="form-label"></label>
+                <input type="number" name="onumber" class="form-control p-3" id="exampleInputNumber" aria-describedby="emailHelp" placeholder="otp">
+              </div>
+            <% } %>
+            
+            <div class="mt-5 mb-3">
+              <% if (link == '/verify') { %>
+                <input type="hidden" name="email" value="<%= oldInput.email %>" />
+              <% } %>
+              <button type="submit" class="btn text-white w-100" id="subBtn" style="background: #f9046b; font-weight: bold;">
+                <% if (link == "/verify") { %>Verify<% } else { %>Reset Password<% } %>
+              </button>
+            </div>
+                  
+            <div class="mt-5">
+              <% if (link == "/verify") { %>
+                <h6 class="text-center">
+                  Didn't receive the code?
+                  <a href="/forget" style="text-decoration: none; color: #f9046b;">Resend</a>
+                </h6>
+              <% } %>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-12 col-lg-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let oi = '<%= JSON.stringify(oldInput) %>';
+    let msg = '<%= errorMessage %>';
+  </script>
+
+  <script>
+      window.addEventListener('load', function () {
+        // console.log("hii...");
+
+        const loadingSpinner = document.getElementById('loadingSpinner');
+          
+        loadingSpinner.style.display = 'none';
+      });
+
+      const submitButton = globalThis.document.getElementById('subBtn');
+
+      const oldInput = JSON.parse(oi.replace(/&#34;/g, '"'));
+
+      // console.log(msg);
+
+      // console.log(oldInput);
+
+      globalThis.document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('form');
+
+//         document.querySelector('.pBtn').addEventListener('click', (e) => {
+//           const inputGroup = e.target.closest('.input-group');
+//           const input = inputGroup.querySelector('input');
+//           const button = inputGroup.querySelector('button');
+
+//           const type = input.type === 'password' ? 'text' : 'password';
+//           input.type = type;
+
+//           if (type === 'text') {
+//               button.innerHTML = '<i class="fa-regular fa-eye"></i>'; // Eye icon
+//           } else {
+//               button.innerHTML = '<i class="fa-regular fa-eye-slash"></i>'; // Eye-slash icon
+//           }
+//         });
+
+        const errorMessageElement = document.querySelector(".alert");
+
+        // If the alert exists, set a timeout to remove it
+        if (msg) {
+          setTimeout(() => {
+            errorMessageElement.style.display = "none"; // Hide the alert
+          }, 3000); // 5 seconds (5000 milliseconds)
+        }
+      })
+    </script>
+</body>
+
+<%- include("./includes/end.ejs"); %>
